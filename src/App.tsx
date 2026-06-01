@@ -1,8 +1,17 @@
 import './App.css';
 import { Button } from './common/ui/button/Button';
+import { useState } from 'react';
 
 function App() {
-  return <Button />;
+  const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
+
+  return (
+    <>
+      <Button onClick={() => setCount((count) => count + 1)}>{count}</Button>
+      <Button onClick={() => setCount2((count2) => count2 + 1)}>{count2}</Button>
+    </>
+  );
 }
 
 export default App;
