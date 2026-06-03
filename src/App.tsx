@@ -1,15 +1,67 @@
 import './App.css';
 import { Button } from './common/ui/button/Button';
-import { useState } from 'react';
+import { type SubmitEvent, useState } from 'react';
+import todolist from "./todolist/todolist";
+import { type TodolistType } from './todolist/TodolistType';
 
 function App() {
   const [count, setCount] = useState(0);
   const [count2, setCount2] = useState(0);
+  const [value, setValue] = useState(""); // utilise pour le formulaire car les valeurs changent lorsque nous introduisons du nouveau contenu dans le formulaire
+  const [todos, setTodos] = useState<TodolistType>(todolist);// utile pour le tableau afin de mettre à jour les élements de la liste
+
+  console.log(todolist);
+
+  const deleteTodo = (id: string) => {
+    setTodos(previousTodos => previousTodos.filter(todo => todo.id !== id))
+  }
+
+  const addTodo = (text: string) => { //Création de nouvelle tâche 
+    const id = Math.random().toString(36).slice(2); // Math.random=retourne un nombre aléatoire entre zéro et un.  La mérthode toString(36)= transforme le nombre en chaine de caractère en base 36, 36=utilise les chiffres de 0 à 9 plus les lettres de a à z. slice(2)= retire les deux premiers caractères 
+
+    const newTodo = {// on crée les objets en nommant une nouvelle constante pour les nouvelles tâches
+      id: id,
+      text: text,
+      done: false
+    }
+
+    setTodos((todo) => [...todo, newTodo])
+  }
+
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault(); //permet de remettre l'evenement par défaut sans que la page supprime tout
+    addTodo(value);// ajoute la  nouvelle valeur dans le champ
+    setValue("");//permet de remettre le champ à vide
+  }
 
   return (
     <>
       <Button onClick={() => setCount((count) => count + 1)}>{count}</Button>
       <Button onClick={() => setCount2((count2) => count2 + 1)}>{count2}</Button>
+
+      <div>
+        <form onSubmit={handleSubmit}>
+          <input
+            placeholder='Ajouter une tâche'
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}>
+          </input>
+
+          <button type="submit"> Ajouter</button>
+        </form>
+      </div>
+
+      {todos && todos.length > 0 ? ( // condition if 
+        <ul>
+          {todos.map(todo => (// utilisé map pour parcourir les éléments du tableau
+            <li key={todo.id}>
+              {todo.text}
+              <Button onClick={() => deleteTodo(todo.id)}>supprimer</Button>
+            </li>
+          ))}
+        </ul>
+      ) : <p>Liste vide</p>}
     </>
   );
 }
@@ -69,4 +121,14 @@ BONUS
 5) Améliorer l'accessibilité du formulaire et du bouton
 
 6) Ajouter des tests unitaires 
+
+
+UTILE pour le rapport de stage
+Contrat d'interface
+la norme RGAA
+pour faire appel à du javascript remettre les accolades {}
+Pour créer une condition if faire ceci {blabla &&  et pour démontrer le else faire ceci ):<p> ceci n'est pas une liste}
+... spraid 
+
+https://fr.react.dev/learn/updating-arrays-in-state
 */
