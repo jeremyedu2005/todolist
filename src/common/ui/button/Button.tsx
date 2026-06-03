@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import type { ReactNode } from 'react';
 import styles from './Button.module.scss';
+interface ButtonProps {
+  children: ReactNode;
+  onClick: () => void;
+}
 
-export const Button = () => {
-    const [count, setCount] = useState(1);
-
-    return (
-        <button
-            type="button"
-            className={styles.button}
-            onClick={() => setCount((count) => count + 1)}
-        >
-            count: <span>{count}</span>
-        </button>
-    );
+export const Button = ({ children, onClick }: ButtonProps) => {
+  return (
+    <button
+      type="button"
+      className={styles.button}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
 };
-
