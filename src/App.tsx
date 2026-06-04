@@ -9,18 +9,24 @@ function App() {
   const [count2, setCount2] = useState(0);
   const [value, setValue] = useState(""); // utilise pour le formulaire car les valeurs changent lorsque nous introduisons du nouveau contenu dans le formulaire
   const [todos, setTodos] = useState<TodolistType>(todolist);// utile pour le tableau afin de mettre à jour les élements de la liste
+  //const [edit,setEdit]=useState(false); mon idée,  mais d'après claude et chatgpt cela ne serait pas correcte car on ne sais pas quel tâche modifier🫠
+  const [editTask, setEditTask] = useState<string | null>(null);// proposition de claude et chatgpt afin de permettre de modifier la tache en particuler
+  const [editTaskValue, setEditTaskValue] = useState("")// il fallait ajouter une variable avec un tableau (state)  car si on utilise le même index que Value pour ajouter du contenu la liste affiche la même tâche mais en doublon
+  const [erreur, setErreur]=useState("");//Gestion d'erreur
 
   console.log(todolist);
 
-  const deleteTodo = (id: string) => {
-    setTodos(previousTodos => previousTodos.filter(todo => todo.id !== id))
-  }
+
+
+
 
   const addTodo = (text: string) => { //Création de nouvelle tâche 
-    const id = Math.random().toString(36).slice(2); // Math.random=retourne un nombre aléatoire entre zéro et un.  La mérthode toString(36)= transforme le nombre en chaine de caractère en base 36, 36=utilise les chiffres de 0 à 9 plus les lettres de a à z. slice(2)= retire les deux premiers caractères 
+    const id = Math.random().toString(36).slice(2); // Math.random=retourne un nombre aléatoire entre zéro et un.  
+    // La mérthode toString(36)= transforme le nombre en chaine de caractère en base 36, 36=utilise les chiffres de 0 à 9 plus les lettres de a à z. 
+    // slice(2)= retire les deux premiers caractères 
 
     const newTodo = {// on crée les objets en nommant une nouvelle constante pour les nouvelles tâches
-      id: id,
+      id: id, //rendre l'id dynamique
       text: text,
       done: false
     }
@@ -28,10 +34,30 @@ function App() {
     setTodos((todo) => [...todo, newTodo])
   }
 
+  const deleteTodo = (id: string) => {
+    setTodos(previousTodos => previousTodos.filter(todo => todo.id !== id))
+    //filter est utilisé afin de filtrer les élements compris dans le tableau afin d'utiliser l'id pour le supprimer
+    // et de renvoyer un tableau  à jour
+  }
+
+  const validateEdit = (id: string) => {
+    if (editTaskValue.trim() === "") { 
+        setErreur("Veuillez compléter le champ"); // affiche l'erreur la personne n'introduit rien dans le champ
+        return; // ← on arrête juste la fonction
+    }
+    setErreur(""); // ← on efface l'erreur si tout va bien
+    setTodos(newTask => newTask.map(newTask => //parcours le tableau pour mette à jour la tâche
+        newTask.id === id ? { ...newTask, text: editTaskValue } : newTask
+    ))
+    setEditTask(null)
+}
+
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
-    event.preventDefault(); //permet de remettre l'evenement par défaut sans que la page supprime tout
+    event.preventDefault(); //permet de remettre l'evenement par défaut sans que la page supprime tout 
+    // une fois qu'on appuie que sur la touche entrée
     addTodo(value);// ajoute la  nouvelle valeur dans le champ
     setValue("");//permet de remettre le champ à vide
+    setEditTaskValue("");//remettre le champ à vide
   }
 
   return (
@@ -54,10 +80,22 @@ function App() {
 
       {todos && todos.length > 0 ? ( // condition if 
         <ul>
-          {todos.map(todo => (// utilisé map pour parcourir les éléments du tableau
-            <li key={todo.id}>
-              {todo.text}
-              <Button onClick={() => deleteTodo(todo.id)}>supprimer</Button>
+          {todos.map(todo => (// utiliser  map pour parcourir les éléments du tableau
+            <li key={todo.id} >
+              {todo.id === editTask ?  /* On crée une condition if si on souhaite modifier la tâche*/
+                <div>
+                  <input
+                    placeholder='modifier la tâche'
+                    type='text'
+                    value={editTaskValue} // mon ancienne idée {value} mais doublon//}
+                    onChange={(e) => setEditTaskValue(e.target.value)} />
+                  <Button  onClick={() => validateEdit(todo.id)/*permet d'ajouter à la liste la nouvelle tâche */}>Valider</Button>
+                  {erreur && <p>{erreur}</p>}
+
+                </div>
+                : todo.text}
+              <Button onClick={() => deleteTodo(todo.id)}/* supprime l'élement grâce à la clé id*/>supprimer</Button>
+              <Button onClick={() => setEditTask(todo.id)}/*cible  la tâche que l'on souhaite modfier*/>modifier </Button>
             </li>
           ))}
         </ul>
@@ -131,4 +169,6 @@ Pour créer une condition if faire ceci {blabla &&  et pour démontrer le else f
 ... spraid 
 
 https://fr.react.dev/learn/updating-arrays-in-state
+https://fr.legacy.reactjs.org/docs/lists-and-keys.html
+https://codelynx.dev/posts/ternaire-en-react
 */
