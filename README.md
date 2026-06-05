@@ -45,3 +45,4 @@ npm run format
 - [React@19](https://react.dev)
 - [React Compiler](https://react.dev/learn/react-compiler)
 - [Vite](https://vitejs.dev)
+- [VitePWA](https://www.npmjs.com/package/vite-plugin-pwa)
