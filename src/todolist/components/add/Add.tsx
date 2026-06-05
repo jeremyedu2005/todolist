@@ -1,15 +1,15 @@
 import { type SubmitEvent, useState } from 'react';
 import { useTodolistDispatch } from '../../infrastructure/useTodolist.ts';
-import { List } from '../list/List.tsx';
 import { Button } from '../../../common/components/button/Button.tsx';
 import { Error } from '../../../common/components/error/Error.tsx';
+import styles from './Add.module.scss';
 
-export const Todolist = () => {
+export const Add = () => {
   const dispatch = useTodolistDispatch();
   const [text, setText] = useState('');
   const [error, setError] = useState(''); // Gestion d'erreur.
 
-  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+  const addTodo = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault(); // Permet de remettre l'evenement par défaut sans que la page supprime tout.
     // Une fois qu'on appuie que sur la touche entrée.
 
@@ -31,17 +31,18 @@ export const Todolist = () => {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
-        <input
-          placeholder="Ajouter une tâche"
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        ></input>
-        <Button type="submit">Ajouter</Button>
-        <Error error={error} />
-      </form>
-    </>
+    <form
+      className={styles.add}
+      onSubmit={addTodo}
+    >
+      <input
+        placeholder="Ajouter une tâche"
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      ></input>
+      <Button type="submit">Ajouter</Button>
+      <Error error={error} />
+    </form>
   );
 };
