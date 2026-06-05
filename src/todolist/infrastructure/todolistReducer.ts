@@ -17,7 +17,7 @@ export const todolistReducer = (state: TodolistType, action: TodolistDispatchTyp
         todo.id === action.id
           ? {
               ...todo,
-              text: todo.text,
+              text: action.text,
             }
           : todo
       );
