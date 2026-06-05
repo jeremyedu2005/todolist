@@ -1,7 +1,12 @@
-.label {
-  padding: 0.5rem;
+.todo {
+  display: flex;
+  padding: 0.25rem;
 }
 
-.done {
-  text-decoration: line-through;
+.label {
+  padding: 0.25rem;
+
+  .done & {
+    text-decoration: line-through;
+  }
 }
