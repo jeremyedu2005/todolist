@@ -1,20 +1,6 @@
 import type { ReactNode } from 'react';
 import styles from './Error.module.scss';
 
-interface ButtonProps {
-  children: ReactNode;
-  onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
-}
-
-export const Button = ({ children, onClick, type = 'button' }: ButtonProps) => {
-  return (
-    <button
-      type={type}
-      className={styles.button}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
+export const Error = ({ error }: { error: ReactNode }) => {
+  return error && <p className={styles.error}>{error}</p>;
 };
