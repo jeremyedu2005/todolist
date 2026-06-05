@@ -1,7 +1,7 @@
 import { Button } from './common/ui/button/Button';
 import { type SubmitEvent, useState } from 'react';
-import { type TodosType } from './ui/todos/TodosType';
-import { Todo } from './ui/todo/Todo';
+import { type TodosType } from './domain/todolist/ui/todos/TodosType';
+import { Todo } from './domain/todolist/ui/todo/Todo';
 import './App.css';
 
 const todolist: TodosType = [
