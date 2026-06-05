@@ -1,26 +1,46 @@
-import './App.css';
 import { Button } from './common/ui/button/Button';
 import { type SubmitEvent, useState } from 'react';
-import todolist from "./todolist/todolist";
-import { type TodolistType } from './todolist/TodolistType';
+import { type TodosType } from './ui/todos/TodosType';
+import { Todo } from './ui/todo/Todo';
+import './App.css';
+
+const todolist: TodosType = [
+  {
+    id: '0',
+    text: "ma première tâche",
+    done: false
+  },
+  {
+    id: '1',
+    text: "ma deuxième tâche",
+    done: true
+  },
+  {
+    id: '2',
+    text: "ma troisième tâche",
+    done: true
+  }
+]
 
 function App() {
   const [count, setCount] = useState(0);
   const [count2, setCount2] = useState(0);
   const [value, setValue] = useState(""); // utilise pour le formulaire car les valeurs changent lorsque nous introduisons du nouveau contenu dans le formulaire
-  const [todos, setTodos] = useState<TodolistType>(todolist);// utile pour le tableau afin de mettre à jour les élements de la liste
-  //const [edit,setEdit]=useState(false); mon idée,  mais d'après claude et chatgpt cela ne serait pas correcte car on ne sais pas quel tâche modifier🫠
-  const [editTask, setEditTask] = useState<string | null>(null);// proposition de claude et chatgpt afin de permettre de modifier la tache en particuler
-  const [editTaskValue, setEditTaskValue] = useState("")// il fallait ajouter une variable avec un tableau (state)  car si on utilise le même index que Value pour ajouter du contenu la liste affiche la même tâche mais en doublon
-  const [erreur, setErreur]=useState("");//Gestion d'erreur
+  const [todos, setTodos] = useState<TodosType>(todolist);// utile pour le tableau afin de mettre à jour les élements de la liste
+  const [editTask, setEditTask] = useState<string | null>(null);// proposition de claude et chatgpt afin de cibler   la tache en particuler
+  const [editTaskValue, setEditTaskValue] = useState("")// il fallait ajouter un nouvel (etat car si on utilise le même index que Value pour ajouter du contenu la liste affiche la même tâche mais en doublon
+  const [error, setError] = useState("");//Gestion d'erreur
 
   console.log(todolist);
 
+  const addTodo = (text: string) => {
+    if (value === "") {
+      setError("Veuillez saisir un texte.")
+      return;
+    }
+    setError("");
 
-
-
-
-  const addTodo = (text: string) => { //Création de nouvelle tâche 
+    //Création de nouvelle tâche 
     const id = Math.random().toString(36).slice(2); // Math.random=retourne un nombre aléatoire entre zéro et un.  
     // La mérthode toString(36)= transforme le nombre en chaine de caractère en base 36, 36=utilise les chiffres de 0 à 9 plus les lettres de a à z. 
     // slice(2)= retire les deux premiers caractères 
@@ -41,16 +61,23 @@ function App() {
   }
 
   const validateEdit = (id: string) => {
-    if (editTaskValue.trim() === "") { 
-        setErreur("Veuillez compléter le champ"); // affiche l'erreur la personne n'introduit rien dans le champ
-        return; // ← on arrête juste la fonction
+    if (editTaskValue.trim() === "") {
+      setError("Veuillez compléter le champ"); // affiche l'erreur la personne n'introduit rien dans le champ
+      return; // ← on arrête juste la fonction
     }
-    setErreur(""); // ← on efface l'erreur si tout va bien
+    setError(""); // ← on efface l'erreur si tout va bien
     setTodos(newTask => newTask.map(newTask => //parcours le tableau pour mette à jour la tâche
-        newTask.id === id ? { ...newTask, text: editTaskValue } : newTask
+      newTask.id === id ? { ...newTask, text: editTaskValue } : newTask
     ))
     setEditTask(null)
-}
+  }
+
+  const completeTodo = (id: string) => { // on récupère l'ID
+    setTodos(previousTodos => previousTodos.map(todo => //  parcours le tableau pour vérifier la tâche
+      todo.id === id ? { ...todo, done: !todo.done } : todo // vérifie que la tâche est cochée.
+      // sinon par défaut la tache n'est pas fini
+    ))
+  }
 
   const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault(); //permet de remettre l'evenement par défaut sans que la page supprime tout 
@@ -73,30 +100,41 @@ function App() {
             value={value}
             onChange={(e) => setValue(e.target.value)}>
           </input>
-
           <button type="submit"> Ajouter</button>
         </form>
+        {error && <p>{error}</p>}
       </div>
 
       {todos && todos.length > 0 ? ( // condition if 
         <ul>
           {todos.map(todo => (// utiliser  map pour parcourir les éléments du tableau
-            <li key={todo.id} >
-              {todo.id === editTask ?  /* On crée une condition if si on souhaite modifier la tâche*/
+            <>
+              <li key={todo.id} >
+                {todo.id === editTask ?  /* On crée une condition if si on souhaite modifier la tâche*/
+                  <div>
+                    <input
+                      placeholder='modifier la tâche'
+                      type='text'
+                      value={editTaskValue} /* mon ancienne idée {value} mais doublon*/
+                      onChange={(e) => setEditTaskValue(e.target.value)} />
+                    <Button onClick={() => validateEdit(todo.id)/*permet d'ajouter à la liste la nouvelle tâche */}>Valider</Button>
+                    {error && <p>{error}</p>}
+                  </div>
+                  : todo.text}
                 <div>
                   <input
-                    placeholder='modifier la tâche'
-                    type='text'
-                    value={editTaskValue} // mon ancienne idée {value} mais doublon//}
-                    onChange={(e) => setEditTaskValue(e.target.value)} />
-                  <Button  onClick={() => validateEdit(todo.id)/*permet d'ajouter à la liste la nouvelle tâche */}>Valider</Button>
-                  {erreur && <p>{erreur}</p>}
-
+                    type='checkbox'
+                    checked={todo.done}
+                    onChange={() => completeTodo(todo.id)}>
+                  </input>
+                  <label>{todo.done ? "terminé" : "non terminé" /*vérifie que l'état est vrai ou faux*/}</label>
                 </div>
-                : todo.text}
-              <Button onClick={() => deleteTodo(todo.id)}/* supprime l'élement grâce à la clé id*/>supprimer</Button>
-              <Button onClick={() => setEditTask(todo.id)}/*cible  la tâche que l'on souhaite modfier*/>modifier </Button>
-            </li>
+                <Button onClick={() => deleteTodo(todo.id)}/*supprime l'élement grâce à la clé id*/>supprimer</Button>
+                <Button onClick={() => setEditTask(todo.id)}/*cible la tâche que l'on souhaite modifier*/>modifier </Button>
+
+              </li>
+              <Todo />
+            </>
           ))}
         </ul>
       ) : <p>Liste vide</p>}

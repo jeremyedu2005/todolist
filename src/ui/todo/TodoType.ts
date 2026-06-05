@@ -3,5 +3,3 @@ export interface TodoType { //tableau contenant une liste d'objet
     text: string;
     done: boolean
 }
-
-export type TodolistType = TodoType[]
