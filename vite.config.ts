@@ -13,7 +13,7 @@ export default defineConfig({
         name: 'Todolist App',
         short_name: '',
         description: '',
-        start_url: '/',
+        start_url: '/todolist/',
         display: 'standalone',
         theme_color: '#3100ff',
         background_color: '#fff',
