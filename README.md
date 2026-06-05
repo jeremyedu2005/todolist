@@ -1,4 +1,4 @@
-# Todolist
+# Add
 
 [Demo](https://jeremyedu2005.github.io/todolist/)
 
@@ -13,7 +13,7 @@
 npm install
 ```
 
-## Development 
+## Development
 
 ```bash
 npm run dev

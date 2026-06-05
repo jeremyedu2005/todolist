@@ -1,0 +1,12 @@
+.todo {
+  display: flex;
+  padding: 0.25rem;
+}
+
+.label {
+  padding: 0.25rem;
+
+  .done & {
+    text-decoration: line-through;
+  }
+}
