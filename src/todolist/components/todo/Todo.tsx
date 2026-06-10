@@ -6,7 +6,7 @@ import type { TodoType } from '../../domain/TodolistType.ts';
 import styles from './Todo.module.scss';
 
 export const Todo = ({ id, text, done }: TodoType) => {
-  const dispatch = useTodolistDispatch();
+  const dispatch = useTodolistDispatch();// faire appel toujours à useTodolisDispatch afin de préciser la méthode que l'on veut utiliser
   const [todo, setTodo] = useState({ id, text });
   const [isChange, setChange] = useState(false);
   const [error, setError] = useState('');

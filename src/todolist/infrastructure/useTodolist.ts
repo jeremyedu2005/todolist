@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { TodolistContext, TodolistDispatchContext } from './todolistContext.ts';
-
+//ce fichier permet de séparer tâches de l'application
 export const useTodolist = () => {
   const context = useContext(TodolistContext);
 
@@ -9,7 +9,7 @@ export const useTodolist = () => {
   }
 
   return context;
-};
+};// permet d'afficher la liste et performant pour éviter d'utiliser useConstext plusieurs fois
 
 export const useTodolistDispatch = () => {
   const context = useContext(TodolistDispatchContext);
@@ -19,4 +19,4 @@ export const useTodolistDispatch = () => {
   }
 
   return context;
-};
+};//permet d'utiliser les méthodes

@@ -50,7 +50,7 @@ export default App;
   L'utilisateur doit egalement pouvoir repasser une tâche terminée à l'etat non terminé.
 
   6) Persister les données
-  Les tâches doivent être sauvegardées dans le session du navigateur.
+  Les tâches doivent être sauvegardées dans la  session du navigateur.
   Au chargement de l'application, les tâches précédemment enregistrées doivent être récupérées.
   A Chaque ajout, supression, modification ou changement d'etat de la liste doit être mise à jour.
 
