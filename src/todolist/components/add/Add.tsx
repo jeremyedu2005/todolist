@@ -18,7 +18,9 @@ export const Add = () => {
       return;
     }
 
-    const id = Math.random().toString(36).slice(2); // Math.random=retourne un nombre aléatoire entre zéro et un. La méthode toString(36)= transforme le nombre en chaine de caractère en base 36, 36=utilise les chiffres de 0 à 9 plus les lettres de a à z. slice(2)= retire les deux premiers caractères.
+    const id = Math.random().toString(36).slice(2); // Math.random=retourne un nombre aléatoire entre zéro et un. 
+    // La méthode toString(36)= transforme le nombre en chaine de caractère en base 36, 36=utilise les chiffres de 0 à 9 plus les lettres de a à z. 
+    // slice(2)= retire les deux premiers caractères.
 
     dispatch({
       type: 'ADD',

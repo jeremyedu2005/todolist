@@ -8,7 +8,7 @@ export const List = () => {
 
   return (
     <div>
-      {list && list.length > 0 ? (
+      {list && list.length > 0 ? ( // on utilise la condition si la liste est supérieur à 0 
         list.map(
           (
             todo // Utiliser map pour parcourir les éléments du tableau.
@@ -21,9 +21,10 @@ export const List = () => {
             />
           )
         )
-      ) : (
+      ) : (//alors 
         <p>La liste vide.</p>
       )}
     </div>
+
   );
 };
