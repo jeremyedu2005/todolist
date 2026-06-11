@@ -1,5 +1,6 @@
 import { useTodolist } from '../../infrastructure/useTodolist.ts';
 import { Todo } from '../todo/Todo.tsx';
+import styles from './List.module.scss';
 
 export const List = () => {
   const list = useTodolist();
@@ -7,8 +8,8 @@ export const List = () => {
   console.log('list', list);
 
   return (
-    <div>
-      {list && list.length > 0 ? ( // on utilise la condition si la liste est supérieur à 0 
+    <div className={styles.list}>
+      {list && list.length > 0 ? ( // on utilise la condition si la liste est supérieur à 0
         list.map(
           (
             todo // Utiliser map pour parcourir les éléments du tableau.
@@ -21,10 +22,10 @@ export const List = () => {
             />
           )
         )
-      ) : (//alors 
+      ) : (
+        //alors
         <p>La liste vide.</p>
       )}
     </div>
-
   );
 };

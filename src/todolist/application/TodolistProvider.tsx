@@ -11,7 +11,7 @@ export const TodolistProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     storage.set(state);
-  }, [state]);
+  }, [storage, state]);
 
   return (
     <TodolistContext value={state}>

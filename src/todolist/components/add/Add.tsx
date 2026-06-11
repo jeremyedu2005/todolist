@@ -2,6 +2,7 @@ import { type SubmitEvent, useState } from 'react';
 import { useTodolistDispatch } from '../../infrastructure/useTodolist.ts';
 import { Button } from '../../../common/components/button/Button.tsx';
 import { Error } from '../../../common/components/error/Error.tsx';
+import { Field } from '../../../common/components/field/Field.tsx';
 import styles from './Add.module.scss';
 
 export const Add = () => {
@@ -18,8 +19,8 @@ export const Add = () => {
       return;
     }
 
-    const id = Math.random().toString(36).slice(2); // Math.random=retourne un nombre aléatoire entre zéro et un. 
-    // La méthode toString(36)= transforme le nombre en chaine de caractère en base 36, 36=utilise les chiffres de 0 à 9 plus les lettres de a à z. 
+    const id = Math.random().toString(36).slice(2); // Math.random=retourne un nombre aléatoire entre zéro et un.
+    // La méthode toString(36)= transforme le nombre en chaine de caractère en base 36, 36=utilise les chiffres de 0 à 9 plus les lettres de a à z.
     // slice(2)= retire les deux premiers caractères.
 
     dispatch({
@@ -37,12 +38,12 @@ export const Add = () => {
       className={styles.add}
       onSubmit={addTodo}
     >
-      <input
+      <Field
+        className={styles.field}
         placeholder="Ajouter une tâche"
-        type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
-      ></input>
+      />
       <Button type="submit">Ajouter</Button>
       <Error error={error} />
     </form>

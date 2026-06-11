@@ -1,13 +1,9 @@
 .add {
   display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
-  input {
-    background-color: #fff;
-    margin-right: 1rem;
-    padding: 1rem;
-    flex: 1;
-    border-radius: 1rem;
-    border: 2px solid #252529;
-    color: #252529;
-  }
+.field {
+  flex: 1;
 }

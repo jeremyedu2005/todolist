@@ -1,0 +1,14 @@
+@mixin font {
+  --font-text: Futura, 'Trebuchet MS', Arial, sans-serif;
+}
+
+@mixin color {
+  --color-1: #ffffff;
+  --color-2: #252529;
+  --color-3: #ff0026;
+}
+
+:root {
+  @include font();
+  @include color();
+}
