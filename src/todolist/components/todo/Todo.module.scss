@@ -5,6 +5,12 @@
   align-items: center;
 }
 
+.form {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .label {
   padding: 0.25rem;
   font-family: var(--font-text), sans-serif;

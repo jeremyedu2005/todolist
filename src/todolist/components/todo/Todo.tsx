@@ -4,9 +4,10 @@ import { Button } from '../../../common/components/button/Button.tsx';
 import { Error } from '../../../common/components/error/Error.tsx';
 import type { TodoType } from '../../domain/TodolistType.ts';
 import styles from './Todo.module.scss';
+import { Field } from '../../../common/components/field/Field.tsx';
 
 export const Todo = ({ id, text, done }: TodoType) => {
-  const dispatch = useTodolistDispatch();// faire appel toujours à useTodolisDispatch afin de préciser la méthode que l'on veut utiliser
+  const dispatch = useTodolistDispatch(); // faire appel toujours à useTodolisDispatch afin de préciser la méthode que l'on veut utiliser
   const [todo, setTodo] = useState({ id, text });
   const [isChange, setChange] = useState(false);
   const [error, setError] = useState('');
@@ -43,16 +44,18 @@ export const Todo = ({ id, text, done }: TodoType) => {
 
   return (
     <div className={[styles.todo, done ? ` ${styles.done}` : ''].join('')}>
-      <input
+      <Field
         type="checkbox"
         id={id}
         checked={done}
         onChange={() => toggleTodo(id)} /* Change l’état de l’élement grâce à la clé id. */
       />
       {isChange ? (
-        <form onSubmit={changeTodo}>
-          <input
-            type="type"
+        <form
+          className={styles.form}
+          onSubmit={changeTodo}
+        >
+          <Field
             id={id}
             value={todo.text}
             onChange={(e) => setTodo({ id: id, text: e.target.value })}

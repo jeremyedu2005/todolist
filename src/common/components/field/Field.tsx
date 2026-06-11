@@ -5,17 +5,19 @@ interface FieldProps {
   className?: string;
   value?: string;
   placeholder?: string;
+  checked?: boolean;
   onChange: (e: { target: { value: string } }) => void;
   type?: 'checkbox' | 'button' | 'text';
 }
 
-export const Field = ({ id, className, placeholder, value, onChange, type = 'text' }: FieldProps) => {
+export const Field = ({ id, className, placeholder, checked, value, onChange, type = 'text' }: FieldProps) => {
   return (
     <input
       id={id}
       type={type}
       className={[styles.field, className ? ` ${className}` : ''].join('')}
       placeholder={placeholder}
+      checked={checked}
       value={value}
       onChange={onChange}
     />
