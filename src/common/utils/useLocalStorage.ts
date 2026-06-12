@@ -17,4 +17,6 @@ export function useLocalStorage<V>(key: string, value: V) {
     );
 
     return { get, set };
-}
+}//Callback est utilisé afin mémorisé les éléments.
+// Attention: getItem et SetItem sont indépendants de l'un et de l'autre
+//useCallback: mémorise une fonction: permet d'éviter des recalcules ou des recréations inutiles lors des rerender

@@ -1,4 +1,4 @@
-export interface TodoType {// on Initialise les objets avec des clés et valeurs
+export interface TodoType {// On Initialise les objets avec des clés et valeurs.
   id: string;
   text: string;
   done: boolean;
