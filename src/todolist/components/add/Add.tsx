@@ -44,7 +44,7 @@ export const Add = () => {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <Button type="submit">Ajouter</Button>
+      <Button type="submit" className={styles.button}>Ajouter</Button>
       <Error error={error} />
     </form>
   );

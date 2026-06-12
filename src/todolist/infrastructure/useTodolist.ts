@@ -9,7 +9,7 @@ export const useTodolist = () => {
   }
 
   return context;
-};// permet d'afficher la liste et performant pour éviter d'utiliser useConstext plusieurs fois
+};// permet d'afficher la liste afin de ne pas surcharger   d'utiliser useConstext plusieurs fois
 
 export const useTodolistDispatch = () => {
   const context = useContext(TodolistDispatchContext);
