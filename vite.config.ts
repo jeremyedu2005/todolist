@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import babel from '@rolldown/plugin-babel';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -43,4 +43,10 @@ export default defineConfig({
     }),
   ],
   base: '/todolist/',
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    include: ['src/**/*.test.{ts,tsx}'],
+    setupFiles: './src/test/setup.ts'
+  },
 });
