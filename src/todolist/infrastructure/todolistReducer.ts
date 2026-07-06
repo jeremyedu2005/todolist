@@ -37,4 +37,3 @@ export const todolistReducer = (state: TodolistType, action: TodolistDispatchTyp
       return state;
   }
 };
-
